@@ -1,0 +1,64 @@
+<div class="exportDiv">
+    <% if(reportData.length != 0) { %>
+        <div class="resultsFound">
+            <b>Resultat hittade: <%= reportData.length %></b>
+        </div>
+    <% } %>
+    <form method="POST" action="export">
+
+        <button type="submit" class="btn btn-success exportButton">Exportera till xlsx <i class="fas fa-file-excel"></i></button>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Kundnamn</th>
+            <th scope="col">Organisations-nummer</th>
+            <th scope="col">Product</th>
+            <th scope="col">Release</th>
+            <th scope="col">Lösning</th>
+            <th scope="col">Licenser</th>
+            <th scope="col">Support köpt till</th>
+            <th scope="col">Hyresmodell</th>
+            <th scope="col">Funktionsavtal</th>
+            <th scope="col">Kundavtal Start</th>
+            <th scope="col">Kundavtal Slut</th>
+            <th scope="col">Avslutad</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% if(reportData.length == 0) { %>
+            <tr>
+                <td colspan="13" style="text-align:center;color:red;"><b>Inga resultat hittades!</b></td>
+            </tr>
+        <% } %>
+        <% for(let i=0 ; i < reportData.length; i++) { %> 
+            <tr>
+                <input type="hidden" name="id" value="<%= reportData[i].id %>">
+                <input type="hidden" name="comments" value="<%= reportData[i].comments %>">
+                <td><input type="hidden" name="kundnamn" value="<%= reportData[i].kundnamn %>"><%= reportData[i].kundnamn %> </td>
+                <td><input type="hidden" name="orgnr" value="<%= reportData[i].orgnr %>"><%= reportData[i].orgnr %> </td>
+                <td><input type="hidden" name="product" value="<%= reportData[i].product %>"><%= reportData[i].product %> </td>
+                <td><input type="hidden" name="version" value="<%= reportData[i].version %>"><%= reportData[i].version %> </td>
+                <td><input type="hidden" name="solution" value="<%= reportData[i].solution %>"><%= reportData[i].solution %> </td>
+                <td><input type="hidden" name="licenses" value="<%= reportData[i].licenses %>"><%= reportData[i].licenses %> </td>
+                <td><input type="hidden" name="supportend" value="<%= reportData[i].supportend %>"><%= reportData[i].supportend %> </td>
+                <td><input type="hidden" name="rentmodel" value="<%= reportData[i].rentmodel %>"><%= reportData[i].rentmodel %> </td>
+                <td><input type="hidden" name="funktionsavtal" value="<%= reportData[i].funktionsavtal %>"><%= reportData[i].funktionsavtal %> </td>
+                <td><input type="hidden" name="agreementStart" value="<%= reportData[i].agreementStart %>"><%= reportData[i].agreementStart %> </td>
+                <td><input type="hidden" name="agreementEnd" value="<%= reportData[i].agreementEnd %>"><%= reportData[i].agreementEnd %> </td>
+                <td><input type="hidden" name="avslutat" value="<%= reportData[i].avslutat %>"><%= reportData[i].avslutat %> </td>
+                <td><input type="hidden" name="teliaBeredskap" value="<%= reportData[i].teliaBeredskap %>"></td>
+                <td><input type="hidden" name="levBeredskap" value="<%= reportData[i].levBeredskap %>"></td>
+                <td><input type="hidden" name="ucansvarig" value="<%= reportData[i].ucansvarig %>"></td>
+                <td><input type="hidden" name="teliaansvarig" value="<%= reportData[i].teliaansvarig %>"></td>
+                <td><input type="hidden" name="servicemanager" value="<%= reportData[i].servicemanager %>"></td>
+                <td><input type="hidden" name="lcm" value="<%= reportData[i].lcm %>"></td>
+                <td><input type="hidden" name="cms" value="<%= reportData[i].cms %>"></td>
+
+            </tr>
+        <% } %>
+    
+        </tbody>
+    </table>
+</form>
+</div>
+

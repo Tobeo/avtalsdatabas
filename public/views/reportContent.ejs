@@ -1,0 +1,139 @@
+<div class="container containerMargin">
+    <form method="POST" action="/searchReport">
+
+    <h3>Sök och exportera data</h3>
+    <div class="filterContainer">
+        <div class="filterLeft">
+            <div>
+                <label>
+                    <span class="labelText">Kundnamn:</span>
+                    <input class="textBox" type="text" name="kundnamn" <% if(locals.lastQuery){ %> value="<%=locals.lastQuery.kundnamn %>" <% } %> >
+                </input>
+                </label>
+            </div>
+            <div>
+                <label>
+                    <span class="labelText">Organisationsnummer:</span>
+                    <input class ="textBox" type="text" name="orgnr" id="" pattern="[0-9]{6}-[0-9]{4}\s*|[0-9]{10}\s*" <% if(locals.lastQuery){ %> value="<%=locals.lastQuery.orgnr %>" <% } %> >
+                </label>
+            </div>
+            <div>
+                <label>
+                    <span class="labelText">Produkt:</span>
+                    <input class="textBox" type="text" name="product" id="" <% if(locals.lastQuery){ %> value="<%=locals.lastQuery.product %>" <% } %> >
+                </label>
+            </div>
+            <div>
+                <label>
+                    <span class="labelText">Version: </span>
+                    <select name="versionFilter">
+                        <option value="lessThan" <% if(locals.lastQuery){ if(locals.lastQuery.versionFilter == "lessThan"){  %> selected <% }} %> ><</option>
+                        <option value="lessThanEqual" <% if(locals.lastQuery){ if(locals.lastQuery.versionFilter == "lessThanEqual"){  %> selected <% }} %> ><=</option>
+                        <option value="equal" <% if(locals.lastQuery){ if(locals.lastQuery.versionFilter == "equal"){  %> selected <% }}if(!locals.lastQuery){ %> selected <% } %> >=</option>
+                        <option value="greaterThanEqual" <% if(locals.lastQuery){ if(locals.lastQuery.versionFilter == "greaterThanEqual"){  %> selected <% }} %> >>=</option>
+                        <option value="greaterThan" <% if(locals.lastQuery){ if(locals.lastQuery.versionFilter == "greaterThan"){  %> selected <% }} %> >></option>
+                    </select>
+                        <input class="textBox" type="text" name="version" id="" <% if(locals.lastQuery){ %> value="<%=locals.lastQuery.version %>" <% } %> >
+                </label>
+            </div>
+            <div>
+                <label>
+                    <span class="labelText">Licenser:</span>
+                    <select name="licensesFilter">
+                        <option value="lessThan" <% if(locals.lastQuery){ if(locals.lastQuery.licensesFilter == "lessThan"){  %> selected <% }} %> ><</option>
+                        <option value="lessThanEqual" <% if(locals.lastQuery){ if(locals.lastQuery.licensesFilter == "lessThanEqual"){  %> selected <% }} %> ><=</option>
+                        <option value="equal" <% if(locals.lastQuery){ if(locals.lastQuery.licensesFilter == "equal"){  %> selected <% }}if(!locals.lastQuery){ %> selected <% } %> >=</option>
+                        <option value="greaterThanEqual" <% if(locals.lastQuery){ if(locals.lastQuery.licensesFilter == "greaterThanEqual"){  %> selected <% }} %> >>=</option>
+                        <option value="greaterThan" <% if(locals.lastQuery){ if(locals.lastQuery.licensesFilter == "greaterThan"){  %> selected <% }} %> >></option>
+                    </select>
+                    <input class="textBox" type="text" name="licenses" pattern="[0-9]+" <% if(locals.lastQuery){ %> value="<%=locals.lastQuery.licenses %>" <% } %> >
+                </label>
+            </div>
+            <div>
+                <label>
+                    <span class="labelText">Support köpt till:</span>
+                    <select name="supportendFilter">
+                        <option value="lessThan" <% if(locals.lastQuery){ if(locals.lastQuery.supportendFilter == "lessThan"){  %> selected <% }} %> ><</option>
+                        <option value="lessThanEqual" <% if(locals.lastQuery){ if(locals.lastQuery.supportendFilter == "lessThanEqual"){  %> selected <% }} %> ><=</option>
+                        <option value="equal" <% if(locals.lastQuery){ if(locals.lastQuery.supportendFilter == "equal"){  %> selected <% }}if(!locals.lastQuery){ %> selected <% } %> >=</option>
+                        <option value="greaterThanEqual" <% if(locals.lastQuery){ if(locals.lastQuery.supportendFilter == "greaterThanEqual"){  %> selected <% }} %> >>=</option>
+                        <option value="greaterThan" <% if(locals.lastQuery){ if(locals.lastQuery.supportendFilter == "greaterThan"){  %> selected <% }} %> >></option>
+                </select>
+                    <input class="textBox" type="date" name="supportend" id="supportend"  <% if(locals.lastQuery){ %> value="<%=locals.lastQuery.supportend %>" <% } %> >
+                </label>
+            </div>
+            <!-- <div>
+                <label>
+                    <span class="labelText">Kundavtal start:</span>
+                    <select name="agreementstartFilter">
+                        <option value="lessThan" <% if(locals.lastQuery){ if(locals.lastQuery.agreementstartFilter == "lessThan"){  %> selected <% }} %> ><</option>
+                        <option value="lessThanEqual" <% if(locals.lastQuery){ if(locals.lastQuery.agreementstartFilter == "lessThanEqual"){  %> selected <% }} %> ><=</option>
+                        <option value="equal" <% if(locals.lastQuery){ if(locals.lastQuery.agreementstartFilter == "equal"){  %> selected <% }}if(!locals.lastQuery){ %> selected <% } %> >=</option>
+                        <option value="greaterThanEqual" <% if(locals.lastQuery){ if(locals.lastQuery.agreementstartFilter == "greaterThanEqual"){  %> selected <% }} %> >>=</option>
+                        <option value="greaterThan" <% if(locals.lastQuery){ if(locals.lastQuery.agreementstartFilter == "greaterThan"){  %> selected <% }} %> >></option>
+                </select>
+                    <input class="textBox" type="date" name="agreementStart" id="agreementStart"  <% if(locals.lastQuery){ %> value="<%=locals.lastQuery.agreementStart %>" <% } %> >
+                </label>
+            </div>
+            <div>
+                <label>
+                    <span class="labelText">Kundavtal slut:</span>
+                        <select name="agreementendFilter">
+                            <option value="lessThan" <% if(locals.lastQuery){ if(locals.lastQuery.agreementendFilter == "lessThan"){  %> selected <% }} %> ><</option>
+                            <option value="lessThanEqual" <% if(locals.lastQuery){ if(locals.lastQuery.agreementendFilter == "lessThanEqual"){  %> selected <% }} %> ><=</option>
+                            <option value="equal" <% if(locals.lastQuery){ if(locals.lastQuery.agreementendFilter == "equal"){  %> selected <% }}if(!locals.lastQuery){ %> selected <% } %> >=</option>
+                            <option value="greaterThanEqual" <% if(locals.lastQuery){ if(locals.lastQuery.agreementendFilter == "greaterThanEqual"){  %> selected <% }} %> >>=</option>
+                            <option value="greaterThan" <% if(locals.lastQuery){ if(locals.lastQuery.agreementendFilter == "greaterThan"){  %> selected <% }} %> >></option>
+                        </select>
+                        <input class="textBox" type="date" name="agreementEnd" id="agreementEnd"  <% if(locals.lastQuery){ %> value="<%=locals.lastQuery.agreementEnd %>" <% } %> >
+                </label>
+            </div> -->
+
+
+    
+        </div>
+        <div class="filterRight">
+                <span class="labelText">Hyresmodell:</span>
+                <select name="rentModel" class="form-control form-select-sm" size="5" id="" multiple required>
+                    <option value="all" <% if(locals.lastQuery){ if(locals.lastQuery.rentModel.includes('all') || locals.lastQuery.rentModel == "all"){  %> selected <% }}if(!locals.lastQuery){ %> selected <% } %> >Alla</option>
+                    <option value="N/A" <% if(locals.lastQuery){ if(locals.lastQuery.rentModel.includes('N/A') || locals.lastQuery.rentModel == "N/A"){  %> selected <% }} %> >N/A</option>
+                    <option value="Nej" <% if(locals.lastQuery){ if(locals.lastQuery.rentModel.includes('Nej') || locals.lastQuery.rentModel == "Nej"){  %> selected <% }} %> >Nej</option>
+                    <option value="Trio Rent" <% if(locals.lastQuery){ if(locals.lastQuery.rentModel.includes('Trio Rent') || locals.lastQuery.rentModel == "Trio Rent"){  %> selected <% }} %> >Trio Rent</option>
+                    <option value="MLA" <% if(locals.lastQuery){ if(locals.lastQuery.rentModel.includes('MLA') || locals.lastQuery.rentModel == "MLA"){  %> selected <% }} %> >MLA</option>
+                </select>      
+                Funktionsavtal:
+                <select name="funktionsavtal" class="form-control form-select-sm" id="" size="4" multiple required>
+                    <option value="all" <% if(locals.lastQuery){ if(locals.lastQuery.funktionsavtal.includes('all') || locals.lastQuery.funktionsavtal == "all"){  %> selected <% }}if(!locals.lastQuery){ %> selected <% } %> >Alla</option>
+                    <option value="N/A" <% if(locals.lastQuery){ if(locals.lastQuery.funktionsavtal.includes('N/A') || locals.lastQuery.funktionsavtal == "N/A"){  %> selected <% }} %> >N/A</option>
+                    <option value="Nej" <% if(locals.lastQuery){ if(locals.lastQuery.funktionsavtal.includes('Nej') || locals.lastQuery.funktionsavtal == "Nej"){  %> selected <% }} %> >Nej</option>
+                    <option value="Ja" <% if(locals.lastQuery){ if(locals.lastQuery.funktionsavtal.includes('Ja') || locals.lastQuery.funktionsavtal == "Ja"){  %> selected <% }} %> >Ja</option>
+                </select>
+                <span class="labelText">Typ av lösning:</span>
+                <select name="solution" id="" class="form-control form-select-sm" size="7" multiple required>
+                    <option value="all" <% if(locals.lastQuery){ if(locals.lastQuery.solution.includes('all') || locals.lastQuery.solution == "all"){  %> selected <% }}if(!locals.lastQuery){ %> selected <% } %> >Alla</option>
+                    <option value="Ej Angiven" <% if(locals.lastQuery){ if(locals.lastQuery.solution.includes('Ej Angiven') || locals.lastQuery.solution == "Ej Angiven"){  %> selected <% }} %> >Ej Angiven</option>
+                    <option value="TelcoCloud" <% if(locals.lastQuery){ if(locals.lastQuery.solution.includes('TelcoCloud') || locals.lastQuery.solution == "TelcoCloud"){  %> selected <% }} %> >TelcoCloud</option>
+                    <option value="Cisco HCS" <% if(locals.lastQuery){ if(locals.lastQuery.solution.includes('Cisco HCS') || locals.lastQuery.solution == "Cisco HCS"){  %> selected <% }} %> >Cisco HCS</option>
+                    <option value="Cygate Cloud" <% if(locals.lastQuery){ if(locals.lastQuery.solution.includes('Cygate Cloud') || locals.lastQuery.solution == "Cygate Cloud"){  %> selected <% }} %> >Cygate Cloud</option>
+                    <option value="CPE" <% if(locals.lastQuery){ if(locals.lastQuery.solution.includes('CPE') || locals.lastQuery.solution == "CPE"){  %> selected <% }} %> >CPE</option>
+                    <option value="TelcoCloud/Hybrid" <% if(locals.lastQuery){ if(locals.lastQuery.solution.includes('TelcoCloud/Hybrid') || locals.lastQuery.solution == "TelcoCloud/Hybrid"){  %> selected <% }} %> >TelcoCloud/Hybrid</option>
+                    <option value="Cygate CPE Hostad" <% if(locals.lastQuery){ if(locals.lastQuery.solution.includes('Cygate CPE Hostad') || locals.lastQuery.solution == "Cygate CPE Hostad"){  %> selected <% }} %> >Cygate CPE Hostad</option>
+                </select>
+                <span class="labelText">Avslutat:</span>
+                <select name="avslutatFilter" class="form-control">
+                    <option value="all" <% if(locals.lastQuery){ if(locals.lastQuery.avslutatFilter == "all"){  %> selected <% }}if(!locals.lastQuery){ %> selected <% } %> >Alla</option>
+                    <option value="Ja" <% if(locals.lastQuery){ if(locals.lastQuery.avslutatFilter == "Ja"){  %> selected <% }} %> >Endast Avslutade</option>
+                    <option value="Nej" <% if(locals.lastQuery){ if(locals.lastQuery.avslutatFilter == "Nej"){  %> selected <% }} %> >Ej Avslutade</option>
+                </select>
+        </div>
+    </div>
+  
+
+<div>
+    <button style="margin-bottom:40px;" type="submit" class="btn btn-lg btn-primary">Sök <i class="fas fa-search"></i></button>
+</div>
+</form>
+</div>
+
+
+

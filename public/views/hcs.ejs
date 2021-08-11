@@ -1,0 +1,167 @@
+<% if(hcsData.length > 0){ %>
+    <div id="hcsDiv">
+    <h4>HCS-Info</h4>
+    <div id="accordion<%= companyData.id %>">
+        <div class="card">
+            <div class="card-header hcs-card-header" id="heading<%= companyData.id %>">
+              <h5 class="mb-0" style="display:flex; flex-direction:column; align-items:center;">
+                <button type="button" class="btn btn-link collapsed hcs-toggle" data-toggle="collapse" data-target="#collapse<%= companyData.id %>" aria-expanded="false" aria-controls="collapse<%= companyData.id %>">
+                  <b><%= __('Visa HCS-information') %> <i class="fas fa-chevron-down" id="hcs-arrow"></i></b>
+                </button>
+              </h5>
+            </div>
+            <div id="collapse<%= companyData.id %>" class="collapse" aria-labelledby="heading<%= companyData.id %>" data-parent="#accordion<%= companyData.id %>">
+              <div class="card-body">
+
+                    
+
+    <% for(let i=0; i < hcsData.length; i++){ %>
+    <b><%= __('Fritextinformation HCS:') %> </b><p class="hcsComments"><%= hcsData[i].comments %></p>
+    <br>
+    <br>
+    <table class="table table-bordered col-md-12">
+        <thead>
+            <tr>
+                <th scope="col">HCS</th>
+                <th scope="col">Customer</th>
+                <th scope="col">UC</th>
+                <th scope="col">Platform</th>
+                <th scope="col">CUCM</th>
+                <th scope="col">CCX</th>
+                <!-- <th scope="col">HVD</th> -->
+                <th scope="col">ACE</th>
+                <th scope="col">IP Phones</th>
+                <th scope="col">Softphones</th>
+                <th scope="col">Free</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><%= hcsData[i].hcsid %></td>
+                <td><%= hcsData[i].customer %></td>
+                <td><%= hcsData[i].uc %></td>
+                <td><%= hcsData[i].platform %></td>
+                <td><%= hcsData[i].cucm %></td>
+                <td><%= hcsData[i].ccx %></td>
+                <!-- <td><%= hcsData[i].hvd %></td> -->
+                <td><%= hcsData[i].ace %></td>
+                <td><%= hcsData[i].ipphones %></td>
+                <td><%= hcsData[i].softphones %></td>
+                <td><%= hcsData[i].free %></td>
+            </tr>
+            <tr>
+                <td colspan="12">
+                    <div id="accordion<%= hcsData[i].hcsid %>">
+                        <div class="card">
+                            <div class="card-header hcs-card-header" id="heading<%= hcsData[i].hcsid %>">
+                              <h5 class="mb-0" style="display:flex; flex-direction:column; align-items:center;">
+                                <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse<%= hcsData[i].hcsid %>" aria-expanded="false" aria-controls="collapse<%= hcsData[i].hcsid %>">
+                                  <b><%= __('Klicka här för att expandera detaljerad HCS-information') %></b>
+                                </button>
+                              </h5>
+                            </div>
+                            <div id="collapse<%= hcsData[i].hcsid %>" class="collapse" aria-labelledby="heading<%= hcsData[i].hcsid %>" data-parent="#accordion<%= hcsData[i].hcsid %>">
+                              <div class="card-body">
+                                  <div id="beredskap">
+                                      <div class="hcs-detail">
+                                        <table>
+                                            <thead></thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="col">
+                                                        Funktion
+                                                    </th>
+                                                    <th scope="col">
+                                                        Produkt
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">
+                                                        HVD
+                                                    </th>
+                                                    <td><%= hcsData[i].hvd %></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">
+                                                        HVD kalenderintegration
+                                                    </th>
+                                                    <td><%= hcsData[i].hvdkalender%></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">
+                                                        Kontaktcenter
+                                                    </th>
+                                                    <td><%= hcsData[i].kontaktcenter %></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">
+                                                        Telefonist
+                                                    </th>
+                                                    <td><%= hcsData[i].telefonist %></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">
+                                                        Besökssystem
+                                                    </th>
+                                                    <td><%= hcsData[i].visitsystem %></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">
+                                                        Röststyrd telefonist
+                                                    </th>
+                                                    <td><%= hcsData[i].voicetelefonist %></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">
+                                                        HVD OS
+                                                    </th>
+                                                    <td><%= hcsData[i].hvdos %></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">
+                                                        HVD SQL
+                                                    </th>
+                                                    <td><%= hcsData[i].hvdsql %></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">
+                                                       Nordic Reach
+                                                    </th>
+                                                    <td><%= hcsData[i].nordicreach %></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">
+                                                        Global Reach
+                                                    </th>
+                                                    <td><%= hcsData[i].globalreach%></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">
+                                                        Direkt Routing
+                                                    </th>
+                                                    <td><%= hcsData[i].direktrouting %></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                      </div>
+
+                                    </div>
+                                  </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <% } %>
+
+
+              </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+    <% } %>

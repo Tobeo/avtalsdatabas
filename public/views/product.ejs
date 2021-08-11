@@ -1,0 +1,88 @@
+<% if(productData.length >= 1) { %>
+<% for(i=0; i < productData.length; i++) { %>
+<% if(productData[i].deleted != 'Yes') { %>
+<% if(productData[i].avslutat == 'Ja'){ %>
+    <h5 class="avslutatText"><i class="fas fa-arrow-down"></i> <%= __('Avtalet är Uppsagt/Avslutat') %> <i class="fas fa-arrow-down"></i></h5>
+<% } %> 
+<div class="productBorder">
+<table class="productTable table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col"><%= __('Produkt') %></th>
+            <th scope="col"><%= __('Release') %></th>
+            <th scope="col"><%= __('Typ av lösning') %></th>
+            <th scope="col"><%= __('Antal Licenser') %></th>
+            <th scope="col"><%= __('Support köpt till') %></th>
+            <th scope="col"><%= __('Hyresmodell') %></th>
+            <th scope="col"><%= __('Funktionsavtal') %></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td></td>
+            <td><%= productData[i].product %></td>
+            <td><%= productData[i].version %></td>
+            <td><%= productData[i].solution %></td>
+            <td><%= productData[i].licenses %></td>
+            <td><%= productData[i].supportend %></td>
+            <td><%= productData[i].rentmodel %></td>
+            <td><%= productData[i].funktionsavtal %></td>
+        </tr>
+        <!-- <tr>
+            <th scope="row">Kundavtal start</th>
+            <td colspan="8"><%= productData[i].agreementStart %></td>
+        </tr> -->
+        <!-- <tr>
+            <th scope="row">Kundavtal slut</th>
+            <td colspan="8"><%= productData[i].agreementEnd %></td>
+        </tr> -->
+        <tr>
+            <th scope="row"><%= __('Kommentar:') %></th>
+            <td colspan="8">
+                <p class="lineBreak"><%= productData[i].comments %></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div id="accordion<%= productData[i].id %>">
+    <div class="card">
+        <div class="card-header" id="heading<%= productData[i].id %>">
+          <h5 class="mb-0" style="display:flex; flex-direction:column; align-items:center;">
+            <p class="beredskapFinns">
+                <%= __('Beredskap finns:') %> 
+                <% if(productData[i].teliaBeredskap == '' && productData[i].levBeredskap == '') { %>
+                    <i style="color:red;"><%= __('NEJ') %></i>
+                <% } else { %>
+                    <i style="color:green;"><%= __('JA') %></i>
+                <% } %>
+            </p>
+            <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse<%= productData[i].id %>" aria-expanded="false" aria-controls="collapse<%= productData[i].id %>">
+              <b><%= __('Klicka här för att visa SLA och beredskap.') %></b>
+            </button>
+          </h5>
+        </div>
+        <div id="collapse<%= productData[i].id %>" class="collapse" aria-labelledby="heading<%= productData[i].id %>" data-parent="#accordion<%= productData[i].id %>">
+          <div class="card-body">
+              <div id="beredskap">
+                <div id="beredskapLeft">
+                    <h5><%= __('SLA & Beredskap Telia') %></h5>
+                    <p class="beredskapText"><%= productData[i].teliaBeredskap %></p>
+                </div>
+                <div id="beredskapRight">
+                    <h5><%= __('Leverantörsberedskap') %></h5>
+                    <p class="beredskapText"><%= productData[i].levBeredskap %></p>
+                </div>
+              </div>
+          </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<% }} %>
+
+<% } else {%>
+<p></p>
+<% } %>

@@ -1,0 +1,51 @@
+<html>
+    <header>
+        <head>
+            <title>UC Avtalsdatabas</title>
+            <link rel="icon" type="image/x-icon" href="/favicon.ico"/>        
+            <link rel="stylesheet" href="/styles/login.css">
+            <link rel="stylesheet" href="/css/bootstrap.css">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+            <link rel="stylesheet" href="/styles/main.css">
+        </head>
+    </header>
+    <div class="container">
+        <h1 id="title">UC Tailor Made Avtalsdatabas</h1>
+
+        <% if(locals.wrongUrl){ %><div class="alert alert-warning" role="alert"><%= __('Felaktig URL') %></div><% } %>
+        <% if(locals.sessionError){ %><div class="alert alert-danger" role="alert"><%= __('Misslyckade att verifiera pågående session. Vänligen logga in på nytt.') %></div><% } %>
+        <% if(locals.loggedOut){ %><div class="alert alert-success" role="alert"><%= __('Utloggad') %></div><% } %>
+        <% if(locals.errorLogin){ %>
+            <div class="alert alert-danger" role="alert">
+                <%= __('Inloggningen misslyckades.') %>
+                <% if(locals.messages){ %>
+                    <%= locals.messages %>
+                <% } %>
+            </div>
+            <% } %>
+        <% if(locals.locale === 'en'){ %>    
+            <a href="/locales/se"><img src="/img/se.png" id="flagIcon"></a>            
+        <% } else { %>
+            <a href="/locales/en"><img src="/img/en.png" id="flagIcon"></a>
+        <% } %>
+        <div class="loginContainer">
+            <form action="/login" method="post">
+                <label>
+                    <span class="labelText"><%= __('Användarnamn:') %></span>
+                    <input class="textBox"  type="text" name="username" id="username" autofocus="autofocus" placeholder="<%= __('TCAD-Användarnamn') %>"><br>
+                </label>
+                <label>
+                    <span class="labelText"><%= __('Lösenord:') %></span>
+                    <input class="textBox" type="password" name="password" id="password" placeholder="<%= __('TCAD-Lösenord') %>"><br>
+                </label>
+
+                <button type="submit" id="loginButton"><%= __('Logga in') %></button>
+            </form>
+            <div class="idmDiv">
+                <a class="idmText" href="/idm"><%= __('Instruktion för behörigheter.') %></a>
+            </div>
+        </div>
+
+    </div>
+    <%- include('footer'); -%>
+</html>

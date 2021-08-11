@@ -1,0 +1,28 @@
+<form method="POST" action="/createNewCustomer" id="createNewCustomer">
+    <div class="newCustomerForm container containerMargin">
+        <h3>Ny kund</h3>
+        <label for="newCustomerName">
+            <span class="labelText">Kundnamn: *</span>
+            <input class="textBox" required type="text" id="newCustomerName" name="newCustomerName" maxlength="60">
+        </label>
+        <label for="newCustomerOrg">
+            <span class="labelText">Organisationsnummer: *</span>
+            <input class="textBox" required type="text" id="newCustomerOrg" name="newCustomerOrg" pattern="[0-9]{6}-[0-9]{4}\s*|[0-9]{10}\s*">
+        </label>
+        <label for="newCustomerVisma">
+            <span class="labelText">Visma kundnummer:</span>
+            <input class="textBox" type="text" id="newCustomerVisma" name="newCustomerVisma" maxlength="10">
+        </label>
+        <label for="newCustomerUc">
+            <span class="labelText">Specialistsäljare UC:</span>
+            <input class="textBox" type="text" id="newCustomerUC" name="newCustomerUC" maxlength="60">
+        </label>
+        <label for="newCustomerTelia">
+            <span class="labelText">Ansvarig säljare:</span>
+            <input class="textBox" type="text" id="newCustomerTelia" name="newCustomerTelia" maxlength="60">
+        </label>
+
+        <button type="submit" class="btn btn-success" id="newCustomerSubmit">Spara <i class="fas fa-save"></i></button>
+    
+    </div>
+</form>

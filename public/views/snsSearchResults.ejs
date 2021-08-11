@@ -1,0 +1,33 @@
+<% if(sessionUser.sns && locals.snsData) { %>
+<% if(snsData.length < 1) { %>
+<div></div>
+<% } else { %>
+<table class="col-md-12 table">
+    <thead>
+        <tr>
+            <th><%= __('Kundnamn') %></th>
+            <th><%= __('Organisationsnummer') %></th>
+            <th><%= __('Välj') %></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+        <% for(let i=0;i<snsData.length;i++) { %>
+            <td><%= snsData[i].kundnamn %></td>
+            <td><%= snsData[i].orgnr.substring(0,6)+"-"+snsData[i].orgnr.substring(6, 10) %></td>
+            <td>
+            <form method="GET" action="/customerSns/<%= snsData[i].orgnr %>" id="selectSearchResult">
+                <button type="submit" class="btn btn-sm btn-success float-left" label="Välj"><i class="far fa-eye"></i></button>
+            </form>
+                <% if(sessionUser.admin) { %>
+                    <form method="POST" action="/editCustomer">
+                        <button type="submit" class="btn btn-sm btn-warning float-left" style="margin-left:5px;" name="company" value="<%= snsData[i].orgnr %>" label="Redigera"><i class="far fa-edit"></i></button>
+                    </form>
+                <% } %>
+            </td>
+
+        </tr>
+        <% } %>
+    </tbody>
+</table>
+<% }} %>

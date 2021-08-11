@@ -1,0 +1,28 @@
+<html>
+    <header>
+        <head>
+            <title>UC Avtalsdatabas</title>
+            <link rel="icon" type="image/x-icon" href="/favicon.ico"/>        
+            <link rel="stylesheet" href="/styles/login.css">
+            <link rel="stylesheet" href="/css/bootstrap.css">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+            <link rel="stylesheet" href="/styles/main.css">
+        </head>
+    </header>
+    <div class="container">
+        <h1 id="title">UC Tailor Made Avtalsdatabas</h1>
+        <div class="idmDiv">
+            <a class="idmText" href="/"><%= __('Tillbaka till inloggning') %></a>
+        </div>
+        <div id="idmGuide">
+            <p>Behörigheter som finns att ansöka om är <b>UC Avtalsdatabas User,</b> <b>UC Avtalsdatabas HCS</b> samt <b>UC Avtalsdatabas Admin</b> via <a href="https://idm.teliasonera.net/identity/" target="_blank"><b>idM</b></a></p>
+            <p><b>UC Avtalsdatabas User</b> ger allmän behörighet att söka upp kunder och visa deras information. <b>Denna behörighet krävs alltid för att komma åt systemet.</b></p>
+            <p><b>UC Avtalsdatabas HCS</b> ger kompletterande behörighet för att redigera kunders HCS-information <b>User</b> behörigheten krävs fortfarande för att komma åt systemet.</p>
+            <p><b>UC Avtalsdatabas Admin</b> ger kompletterande behörighet att redigera kundinformation. <b>User</b> behörigheten krävs fortfarande för att komma åt systemet.</p>
+            <img src="/img/idm.png" style="margin:0 auto;"></img>
+            <br>
+        </div>
+
+    </div>
+    <%- include('footer'); -%>
+</html>

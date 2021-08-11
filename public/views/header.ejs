@@ -1,0 +1,43 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>UC Avtalsdatabas</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/header.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/jquery-ui.css">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css"> -->
+</head>
+
+<div class="container">
+    <h1 id="title">UC Tailor Made Avtalsdatabas</h1>
+    <p><%= __('Inloggad som:') %> <%= sessionUser.name %> 
+    <% if(sessionUser.admin){ %>
+        (Admin)    
+    <% } else if (sessionUser.hcsAdmin) { %>
+        (HCS-Admin)
+    <% } else { %>
+        (User)
+    <% } %>
+    <i class="logout">(<a href="/logout"><%= __('Logga ut') %></a>)</i>
+    </p>
+    <a href="/landing"><button type="button" class="btn btn-primary btn-sm"><%= __('Sök') %></button></a>
+    <a href="/new"><button type="button" class="btn btn-primary btn-sm" <% if(!sessionUser.admin){ %> disabled <% } %> > <%= __('Ny Kund') %></button></a>
+    <a href="/reports"><button type="button" class="btn btn-primary btn-sm" <% if(!sessionUser.admin){ %> disabled <% } %> > <%= __('Exportera') %></button></a>
+
+    <% if(locals.locale === 'en'){ %>    
+    <a href="/locale/se"><img src="/img/se.png" id="flagIcon"></a>            
+    <% } else { %>
+    <a href="/locale/en"><img src="/img/en.png" id="flagIcon"></a>
+    <% } %>
+
+    <form id="searchCompany" action="/" method="POST">
+        <label>
+            <span class="labelText"><%= __('Sök kund:') %></span>
+            <input class="textBox"  type="text" name="company" id="company" autofocus="autofocus"><br>
+        </label>
+        <input class="btn btn-primary" type="submit" value="<%= __('Sök') %>" action="POST" label="<%= __('Sök') %>"/>
+    </form>
+
+

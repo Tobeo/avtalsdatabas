@@ -1,0 +1,12 @@
+<html>
+    
+    <%- include('header'); -%>
+
+    <%- include('reportContent') %>
+    <% if(locals.reportData) {%> 
+        <%- include('reportTable') %>
+    <% } %>
+    <%- include('footer'); -%>
+    
+
+</html>

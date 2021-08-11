@@ -1,0 +1,192 @@
+<% if(hcsData.length > 0) { %>
+    <% if(!sessionUser.admin) { %>
+        <div style="display:flex;flex-direction:row;">
+            <form method="GET" action="/customer/<%= companyData.orgnr %>">
+                <button type="submit" class="btn btn-danger buttonMarginRight" name="company"
+                    value="<%= companyData.orgnr %>" action="POST" label="Avbryt">Avbryt <i
+                        class="fas fa-times-circle"></i></button>
+            </form>
+            <form method="POST" action="/saveHcs">
+                <button type="submit" class="saveEditButton btn btn-success buttonMarginRight" name="company"
+                    value="<%= companyData.orgnr %>" action="POST" label="Spara">Spara <i
+                        class="fas fa-save"></i></button>
+        </div>
+        <% } %>
+            <h4>HCS-Info</h4>
+            <% for(let i=0; i < hcsData.length; i++){ %>
+                <input type="hidden" name="HCSidhcs" value="<%= hcsData[i].idhcs %>">
+                <input type="hidden" name="HCSorgnr" value="<%= hcsData[i].orgnr %>">
+                <td colspan="12">
+                    <div id="hcs">
+                        <table class="table table-bordered col-md-12 hcstable">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Fritextinformation HCS: </th>
+                                    <td colspan="4" ><textarea type="text"style="width:24rem;height:6rem;" name="HCScomments" value=""><%= hcsData[i].comments %></textarea></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">HCS</th>
+                                    <td>
+                                        <input type="text" id="HCShcsid" name="HCShcsid"
+                                            value="<%= hcsData[i].hcsid %>">
+                                    </td>
+
+                                    <th scope="row">HVD Kalenderintegration</th>
+                                    <td>
+                                        <input type="text" id="HCShvdkalender" name="HCShvdkalender"
+                                            value="<%= hcsData[i].hvdkalender %>">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Customer</th>
+                                    <td>
+                                        <input type="text" id="HCScustomer" name="HCScustomer"
+                                            value="<%= hcsData[i].customer %>">
+                                    </td>
+                                    <th scope="row">
+                                        Kontaktcenter
+                                    </th>
+                                    <td>
+                                        <input type="text" id="HCSkontaktcenter" name="HCSkontaktcenter"
+                                        value="<%= hcsData[i].kontaktcenter %>">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">UC</th>
+                                    <td>
+                                        <input type="text" id="HCSuc" name="HCSuc" value="<%= hcsData[i].uc %>">
+                                    </td>
+                                    <th scope="row">
+                                        Telefonist
+                                    </th>
+                                    <td>
+                                        <input type="text" id="HCStelefonist" name="HCStelefonist"
+                                        value="<%= hcsData[i].telefonist %>">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Platform</th>
+                                    <td>
+                                        <input type="text" id="HCSplatform" name="HCSplatform"
+                                            value="<%= hcsData[i].platform %>">
+                                    </td>
+                                    <th scope="row">
+                                        Besökssystem
+                                    </th>
+                                    <td>
+                                        <input type="text" id="HCSvisitsystem" name="HCSvisitsystem"
+                                        value="<%= hcsData[i].visitsystem %>">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">CUCM</th>
+                                    <td>
+                                        <input type="text" id="HCScucm" name="HCScucm" value="<%= hcsData[i].cucm %>">
+                                    </td>
+                                    <th scope="row">
+                                        Röststyrd telefonist
+                                    </th>
+                                    <td>
+                                        <input type="text" id="HCSvoicetelefonist" name="HCSvoicetelefonist"
+                                        value="<%= hcsData[i].voicetelefonist %>">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">CCX</th>
+                                    <td>
+                                        <input type="text" id="HCSccx" name="HCSccx" value="<%= hcsData[i].ccx %>">
+                                    </td>
+                                    <th scope="row">
+                                        HVD OS
+                                    </th>
+                                    <td>
+                                        <input type="text" id="HCShvdos" name="HCShvdos"
+                                        value="<%= hcsData[i].hvdos %>">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">HVD</th>
+                                    <td>
+                                        <input type="text" id="HCShvd" name="HCShvd" value="<%= hcsData[i].hvd %>">
+                                    </td>
+                                    <th scope="row">
+                                        HVD SQL
+                                    </th>
+                                    <td>
+                                        <input type="text" id="HCShvdsql" name="HCShvdsql"
+                                        value="<%= hcsData[i].hvdsql %>">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">ACE</th>
+                                    <td>
+                                        <input type="text" id="HCSace" name="HCSace" value="<%= hcsData[i].ace %>">
+                                    </td>
+                                    <th scope="row">
+                                        Nordic Reach
+                                    </th>
+                                    <td>
+                                        <input type="text" id="HCSnordicreach" name="HCSnordicreach"
+                                        value="<%= hcsData[i].nordicreach %>">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">IP Phones</th>
+                                    <td>
+                                        <input type="text" id="HCSipphones" name="HCSipphones"
+                                            value="<%= hcsData[i].ipphones %>">
+                                    </td>
+                                    <th scope="row">
+                                        Global Reach
+                                    </th>
+                                    <td>
+                                        <input type="text" id="HCSglobalreach" name="HCSglobalreach"
+                                        value="<%= hcsData[i].globalreach %>">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Softphones</th>
+                                    <td>
+                                        <input type="text" id="HCSsoftphones" name="HCSsoftphones"
+                                            value="<%= hcsData[i].softphones %>">
+                                    </td>
+                                    <th scope="row">
+                                        Direkt Routing
+                                    </th>
+                                    <td>
+                                        <input type="text" id="HCSdirektrouting" name="HCSdirektrouting"
+                                        value="<%= hcsData[i].direktrouting %>">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Free</th>
+                                    <td>
+                                        <input type="text" id="HCSfree" name="HCSfree" value="<%= hcsData[i].free %>">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </td>
+                </tbody>
+                </table>
+                <% } %>
+
+                    <% if(!sessionUser.admin) { %>
+
+                        <div style="display:flex;flex-direction: row;">
+                            <button type="submit" class="saveEditButton btn btn-success buttonMarginRight"
+                                name="company" value="<%= companyData.orgnr %>" action="POST" label="Spara">Spara <i
+                                    class="fas fa-save"></i></button>
+                            </form>
+                            <form method="GET" action="/customer/<%= companyData.orgnr %>">
+                                <button type="submit" class="btn btn-danger buttonMarginRight" name="company"
+                                    value="<%= companyData.orgnr %>" action="POST" label="Avbryt">Avbryt <i
+                                        class="fas fa-times-circle"></i></button>
+                            </form>
+                        </div>
+                        <% } %>
+
+                            <% } %>

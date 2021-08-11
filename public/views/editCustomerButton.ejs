@@ -1,0 +1,51 @@
+<% if(sessionUser.sns) { %>
+    <div class="editButtons">
+        <% if(!sessionUser.admin && sessionUser.hcsAdmin && hcsData.length > 0) { %>
+        <form method="POST" action="/editHcs">
+            <button type="submit" class="btn btn btn-warning buttonMarginRight" name="company" value="<%= companyData.orgnr %>" action="POST" label="Spara" disabled><%= __('Redigera') %> <i class="fas fa-edit"></i></button>  
+        </form>
+        <% } %>
+        <% if((sessionUser.admin || sessionUser.hcsAdmin) && hcsData.length == 0) { %>
+        <form method="POST" action="/createHcsSns/<%= companyData.orgnr %>" onsubmit="return confirm('Är du säker på att du vill skapa HCS-data för denna kund?');">
+            <button type="submit" value="<%= companyData.orgnr %>" class="btn btn btn-primary buttonMarginRight" label="Spara"><%= __('Skapa HCS data') %> <i class="fas fa-plus-circle"></i></button>  
+        </form>
+        <% } %> 
+        <% if(sessionUser.admin){ %>
+        <form method="POST" action="/editCustomerSns">
+            <button type="submit" class="btn btn btn-warning buttonMarginRight" name="company" value="<%= companyData.orgnr %>" action="POST" label="Spara"><%= __('Redigera') %> <i class="fas fa-edit"></i></button>  
+        </form>
+        <form method="POST" action="/addProductSns">
+            <button type="submit" class="btn btn btn-primary buttonMarginRight" name="company" value="<%= companyData.orgnr %>" action="POST" label="Spara"><%= __('Lägg till produkt') %> <i class="fas fa-plus-circle"></i></button>  
+        </form>
+        <% } %>
+        <form method="GET" action="/customerSns/<%= companyData.orgnr %>">
+            <button type="submit" class="btn btn btn-info buttonMarginRight" label="Spara"><%= __('Ladda om kund') %> <i class="fas fa-redo"></i></button>  
+        </form>   
+    </div>
+<% } else { %>
+    <div class="editButtons">
+        <% if(!sessionUser.admin && sessionUser.hcsAdmin && hcsData.length > 0) { %>
+        <form method="POST" action="/editHcs">
+            <button type="submit" class="btn btn btn-warning buttonMarginRight" name="company" value="<%= companyData.orgnr %>" action="POST" label="Spara"><%= __('Redigera') %> <i class="fas fa-edit"></i></button>  
+        </form>
+        <% } %>
+        <% if((sessionUser.admin || sessionUser.hcsAdmin) && hcsData.length == 0) { %>
+        <form method="POST" action="/createHcs/<%= companyData.orgnr %>" onsubmit="return confirm('Är du säker på att du vill skapa HCS-data för denna kund?');">
+            <button type="submit" value="<%= companyData.orgnr %>" class="btn btn btn-primary buttonMarginRight" label="Spara"><%= __('Skapa HCS data') %> <i class="fas fa-plus-circle"></i></button>  
+        </form>
+        <% } %> 
+        <% if(sessionUser.admin){ %>
+        <form method="POST" action="/editCustomer">
+            <button type="submit" class="btn btn btn-warning buttonMarginRight" name="company" value="<%= companyData.orgnr %>" action="POST" label="Spara"><%= __('Redigera') %> <i class="fas fa-edit"></i></button>  
+        </form>
+        <form method="POST" action="/addProduct">
+            <button type="submit" class="btn btn btn-primary buttonMarginRight" name="company" value="<%= companyData.orgnr %>" action="POST" label="Spara"><%= __('Lägg till produkt') %> <i class="fas fa-plus-circle"></i></button>  
+        </form>
+        <% } %>
+        <form method="GET" action="/customer/<%= companyData.orgnr %>">
+            <button type="submit" class="btn btn btn-info buttonMarginRight" label="Spara"><%= __('Ladda om kund') %> <i class="fas fa-redo"></i></button>  
+        </form>   
+    </div>
+<% } %>
+
+

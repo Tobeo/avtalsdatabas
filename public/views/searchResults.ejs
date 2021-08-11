@@ -1,0 +1,91 @@
+<% if(data.length <= 0) { %>
+    <h4>Inga resultat hittades på <%= locals.searchedString %>!</h4>
+<% } %>
+
+<% if(data.length > 0) { %>
+<table class="col-md-12 table">
+    <thead>
+        <tr>
+            <th><%= __('Kundnamn') %></th>
+            <th><%= __('Organisationsnummer') %></th>
+            <th><%= __('Välj') %></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for(let i=0;i<data.length;i++) { %>
+        <tr>
+            <% if(data[i].sns) { %>
+                <% if(sessionUser.sns) { %>
+                    <td><%= data[i].kundnamn %></td>
+                    <td><%= data[i].orgnr.substring(0,6)+"-"+data[i].orgnr.substring(6, 10) %></td>
+                    <td>
+                    <form method="GET" action="/customerSns/<%= data[i].orgnr %>" id="selectSearchResult">
+                        <button type="submit" class="btn btn-sm btn-success float-left" label="Välj"><i class="far fa-eye"></i></button>
+                    </form>
+                        <% if(sessionUser.admin) { %>
+                            <form method="POST" action="/editCustomer">
+                                <button type="submit" class="btn btn-sm btn-warning float-left" style="margin-left:5px;" name="company" value="<%= data[i].orgnr %>" label="Redigera"><i class="far fa-edit"></i></button>
+                            </form>
+                        <% } %>
+                    </td>
+        
+                </tr>
+            <% } else { %>
+                <div></div>
+            <% }} %>
+            <% if(!data[i].sns) { %>
+                <td><%= data[i].kundnamn %></td>
+                <td><%= data[i].orgnr.substring(0,6)+"-"+data[i].orgnr.substring(6, 10) %></td>
+                <td>
+                <form method="GET" action="/customer/<%= data[i].orgnr %>" id="selectSearchResult">
+                    <button type="submit" class="btn btn-sm btn-success float-left" label="Välj"><i class="far fa-eye"></i></button>
+                </form>
+                    <% if(sessionUser.admin) { %>
+                        <form method="POST" action="/editCustomer">
+                            <button type="submit" class="btn btn-sm btn-warning float-left" style="margin-left:5px;" name="company" value="<%= data[i].orgnr %>" label="Redigera"><i class="far fa-edit"></i></button>
+                        </form>
+                    <% } %>
+                </td>
+    
+            </tr>
+            <% } %>
+
+        <% } %>
+    </tbody>
+</table>
+<% } %>
+
+<br><br>
+<% if(commentsData.length <= 0) { %>
+    <p></p>
+<% } else { %>
+    <h5><%= __('Kunder som innehåller') %> <i><%= locals.searchedString %></i></h5>
+    <table class="col-md-12 table">
+        <thead>
+            <tr>
+                <th><%= __('Kundnamn') %></th>
+                <th><%= __('Organisationsnummer') %></th>
+                <th><%= __('Välj') %></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            <% for(let i=0;i<commentsData.length;i++) { %>
+                <td><%= commentsData[i].kundnamn %></td>
+                <td><%= commentsData[i].orgnr.substring(0,6)+"-"+commentsData[i].orgnr.substring(6, 10) %></td>
+                <td>
+                <form method="GET" action="/customer/<%= commentsData[i].orgnr %>" id="selectSearchResult">
+                    <button type="submit" class="btn btn-sm btn-success float-left" label="Välj"><i class="far fa-eye"></i></button>
+                </form>
+                    <% if(sessionUser.admin) { %>
+                        <form method="POST" action="/editCustomer">
+                            <button type="submit" class="btn btn-sm btn-warning float-left" style="margin-left:5px;" name="company" value="<%= commentsData[i].orgnr %>" label="Redigera"><i class="far fa-edit"></i></button>
+                        </form>
+                    <% } %>
+                </td>
+    
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+<% } %>

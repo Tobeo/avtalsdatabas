@@ -1,0 +1,60 @@
+<br>
+<div class="companyInfo">
+    <h5><%= companyData.kundnamn %></h5><p><%= companyData.orgnr.substring(0,6)+"-"+companyData.orgnr.substring(6, 10) %></p>
+    <div class="customerData">
+        <div class="customerLeft">
+            <p><b><%= __('Ansvarig säljare:') %></b> <%= companyData.teliaansvarig %></p>
+            <p><b><%= __('Service Manager:') %></b> <%= companyData.servicemanager %></p>
+            <p><b><%= __('Presale:') %></b> <%= companyData.presale %></p>
+            <p><b><%= __('Vismakundnummer:') %></b> <%= companyData.visma %></p> 
+            <br>
+            <p><b><%= __('Kundavtal start:') %></b> <%= companyData.agreementStart %></p>
+            <p><b><%= __('Automatisk förlängning av avtal:') %> </b> 
+
+            <% if (companyData.autoProlong == 'Ja') { %>
+                <%= __('Ja') %> <span class="tooltipQuestionmark" data-toggle="tooltip" title="<%= __('autoFörlängning1') %> <%= companyData.agreementEnd %><%= __('autoFörlängning2') %>">?</span> </p>
+            <% } else { %>
+                <%= __('Nej') %> </p>
+            <% } %>
+        </div>
+        <div class="customerRight">
+            <p><b><%= __('Specialistsäljare UC:') %></b> <%= companyData.ucansvarig %></p>
+            <p><b><%= __('LCM:') %> </b> <%= companyData.lcm %></p>
+            <p><b><%= __('CMS:') %> </b> <%= companyData.cms %></p>
+            <p></p> <br>
+            <br>
+            <p><b><%= __('Kundavtal slut:') %></b> <%= companyData.agreementEnd %></p>
+        </div>
+
+    </div>
+    <% if(numbersData.length > 0){ %>
+        <table class="table table-bordered col-md-4">
+            <thead>
+                <tr>
+                    <th scope="col"><%= __('Anläggningsnummer') %></th>
+                    <th scope="col"><%= __('Notering') %></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(let i=0; i < numbersData.length; i++){ %>
+                    <tr class="anl-tr">
+                        <td><%= numbersData[i].nummer %></td>
+                        <td><%= numbersData[i].note %></td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    <% } %>
+
+   
+
+
+
+       
+
+    <br>
+    <b><%= __('Kommentar:') %> </b><p class="companyComments"><%= companyData.comments %></p>
+    <b><%= __('Senast Uppdaterad:') %> </b><i class="text-muted"><%= companyData.lastUpdatedDate +' '+ __('av') +' '+ companyData.lastUpdatedUser %></i>
+    <p><b><a href="mailto:uc-delivery@teliacompany.com?subject=Ändringsbegäran UC Tailor Made Avtalsdatabas&body=Kundnamn: <%= companyData.kundnamn %> %0d%0aOrgsanisationsnummer: <%= companyData.orgnr %> %0d%0aInformation att uppdatera: "><%= __('Begär ändring av information.') %></a></b></p>
+</div>
+

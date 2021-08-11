@@ -1,0 +1,25 @@
+<html>
+    <link rel="stylesheet" href="./css/bootstrap.css">
+    
+    <%- include('header'); -%>
+
+    <% if(sessionUser.admin) { %>
+        <%- include('editCustomerPart'); -%>
+    <% } else { %>
+        <%- include('customer'); -%>
+    <% } %>
+
+    <%- include('editHcs') -%>
+
+    <% if(sessionUser.admin) { %>
+        <%- include('editProductPart'); -%>
+    <% } else { %>
+        <%- include('product'); -%>
+    <% } %>
+
+    
+    <%- include('footer'); -%>
+    
+
+</html>
+

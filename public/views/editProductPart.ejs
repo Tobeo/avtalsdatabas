@@ -1,0 +1,144 @@
+<% if(productData.length >= 1) { %>
+<% for(i=0; i < productData.length; i++) { %>
+<% if(productData[i].deleted != 'Yes') { %>
+
+<div class="productBorder">
+<table class="productTable table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">id:</th>
+            <th scope="col">Produkt</th>
+            <th scope="col">Release</th>
+            <th scope="col">Typ av lösning</th>
+            <th scope="col">Antal Licenser</th>
+            <th scope="col">Support köpt till</th>
+            <th scope="col">Hyresmodell</th>
+            <th scope="col">Funktionsavtal</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><input id="prefilledId" type="text" name="id" value="<%= productData[i].id %>" readonly></input></td>
+            <td><input name="productInput" type="text" value="<%= productData[i].product %>" maxlength="45"></input></td>
+            <td><input name="versionInput" type="text" id="versionInput" value="<%= productData[i].version %>" maxlength="10"></input></td>
+            <td>
+                <select name="solutionInput" id="solutionInput">
+                    <option value="Ej Angiven" <% if(productData[i].solution == "Ej Angiven") { %> selected  <% } %> >Ej Angiven</option>
+                    <option value="TelcoCloud" <% if(productData[i].solution == "TelcoCloud") { %> selected  <% } %> >TelcoCloud</option>
+                    <option value="Cisco HCS" <% if(productData[i].solution == "Cisco HCS") { %> selected  <% } %> >Cisco HCS</option>
+                    <option value="Cygate Cloud" <% if(productData[i].solution == "Cygate Cloud") { %> selected  <% } %> >Cygate Cloud</option>
+                    <option value="CPE" <% if(productData[i].solution == "CPE") { %> selected  <% } %> >CPE</option>
+                    <option value="TelcoCloud/Hybrid" <% if(productData[i].solution == "TelcoCloud/Hybrid") { %> selected  <% } %> >TelcoCloud/Hybrid</option>
+                    <option value="Cygate CPE Hosted" <% if(productData[i].solution == "Cygate CPE Hosted") { %> selected  <% } %> >Cygate CPE Hosted</option>
+                </select>
+            </td>
+            <td><input name="licensesInput" type="text" id="licensesInput" value="<%= productData[i].licenses %>" maxlength="10"></input></td>
+            <td><input name="supportendInput" type="date" id="supportendInput" value="<%= productData[i].supportend %>"></input></td>
+            <td>
+                <select name="rentmodelInput" id="rentmodelInput">
+                    <option value="N/A"<% if(productData[i].rentmodel == "N/A"){ %> selected <% } %> >N/A</option>
+                    <option value="Nej"<% if(productData[i].rentmodel == "Nej"){ %> selected <% } %> >Nej</option>
+                    <option value="Trio Rent"<% if(productData[i].rentmodel == "Trio Rent"){ %> selected <% } %> >Trio Rent</option>
+                    <option value="MLA"<% if(productData[i].rentmodel == "MLA"){ %> selected <% } %> >MLA</option>
+                </select>
+            </td>
+            <td>
+                <select name="funktionsavtalInput" id="funktionsavtalInput">
+                    <option value="N/A"<% if(productData[i].funktionsavtal == "N/A"){ %> selected <% } %> >N/A</option>
+                    <option value="Nej"<% if(productData[i].funktionsavtal == "Nej"){ %> selected <% } %> >Nej</option>
+                    <option value="Ja"<% if(productData[i].funktionsavtal == "Ja"){ %> selected <% } %> >Ja</option>
+                </select>
+            </td>
+        </tr>
+        <!-- <tr>
+            <th scope="row">Kundavtal start</th>
+            <td colspan="7"><input name="agreementStartInput" type="date" id="agreementStartInput" value="<%= productData[i].agreementStart %>"></input>
+            <div class="deleteCheckbox"><p>Markera för borttag: </p><input name="delete" value="<%= productData[i].id %>" type="checkbox"></div></td>
+            </td>
+            
+        </tr> -->
+        <!-- <tr>
+            <th scope="row">Kundavtal slut</th>
+            <td colspan="7"><input name="agreementEndInput" type="date" id="agreementEndInput" value="<%= productData[i].agreementEnd %>"></input>
+
+
+            </td>
+        </tr> -->
+        <tr>
+            <th scope="row">Kommentar</th>
+            <td colspan="8">
+                <textarea name="commentInput" type="text" style="width:24rem;height:6rem;" id="commentInput" value="" maxlength="500"><%= productData[i].comments %></textarea>
+            <div class="avslutatOrDelete">
+                <div class="avslutatDiv">
+                    Avtalet är uppsagt/avslutat: 
+                    <select name="avslutatInput" id="avslutatInput">
+                        <option value="Nej"<% if(productData[i].avslutat == "Nej"){ %> selected <% } %> >Nej</option>
+                        <option value="Ja"<% if(productData[i].avslutat == "Ja"){ %> selected <% } %> >Ja</option>
+                    </select>
+                </div>
+                <div class="deleteCheckbox">
+                    <p>Markera för borttag: </p><input name="delete" value="<%= productData[i].id %>" type="checkbox">
+                </div>
+            </div>
+
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div id="accordion">
+    <div class="card">
+        <div class="card-header" id="heading<%= productData[i].id %>">
+          <h5 class="mb-0" style="display:flex; flex-direction:column; align-items:center;">
+            <p class="beredskapFinns">
+                Beredskap finns: 
+                <% if(productData[i].teliaBeredskap == '' && productData[i].levBeredskap == '') { %>
+                    <i style="color:red;">NEJ</i>
+                <% } else { %>
+                    <i style="color:green;">JA</i>
+                <% } %>
+                
+                
+            </p>
+            <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse<%= productData[i].id %>" aria-expanded="false" aria-controls="collapse<%= productData[i].id %>">
+              <b>Klicka här för att visa SLA och beredskap.</b>
+            </button>
+          </h5>
+        </div>
+        <div id="collapse<%= productData[i].id %>" class="collapse" aria-labelledby="heading<%= productData[i].id %>" data-parent="#accordion">
+          <div class="card-body">
+              <div id="beredskap">
+                <div id="beredskapLeft">
+                    <h5>SLA & Beredskap Telia</h5>
+                    <textarea name="teliaBeredskapInput" type="text" id="teliaBeredskapInput" value="" maxlength="2048"><%= productData[i].teliaBeredskap %></textarea>
+                </div>  
+                <div id="beredskapRight">
+                    <h5>Leverantörsberedskap</h5>
+                    <textarea name="levBeredskapInput" type="text" id="levBeredskapInput" value="" maxlength="2048"><%= productData[i].levBeredskap %></textarea>
+                </div>
+              </div>
+          </div>
+        </div>
+    </div>
+</div>
+</div>
+<% }} %>
+
+<% } else {%>
+<p></p>
+<% } %>    
+
+
+<div style="display:flex;flex-direction: row;">
+    <button type="submit" class="saveEditButton btn btn-success buttonMarginRight" name="company" value="<%= companyData.orgnr %>" action="POST" label="Spara">Spara <i class="fas fa-save"></i></button>  
+</form>
+<form method="GET" action="/customer/<%= companyData.orgnr %>">
+    <button type="submit" class="btn btn-danger buttonMarginRight" name="company" value="<%= companyData.orgnr %>" action="POST" label="Avbryt">Avbryt <i class="fas fa-times-circle"></i></button>  
+</form>
+</div>
+
+
+
+
+<script>
+    
+</script>

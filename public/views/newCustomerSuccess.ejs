@@ -1,0 +1,15 @@
+
+
+<html>
+    
+    <%- include('header'); -%>
+
+    <div class="alert alert-success" role="alert">
+        <form method="GET" action="/customer/<%=data.newCustomerOrg %>" id="selectSearchResult">
+        Lagt till ny kund: <%= data.newCustomerName %> <td><button type="submit" class="btn btn-sm btn-success" label="Gå till kund">Gå till kund</button></td>
+        </form>
+    </div>
+
+    <%- include('footer'); -%>
+    
+</html>
