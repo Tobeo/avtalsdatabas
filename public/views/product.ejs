@@ -8,7 +8,11 @@
 <table class="productTable table table-hover table-bordered">
     <thead>
         <tr>
-            <th scope="col"></th>
+            <th scope="col">
+                <% if(productData[i].editedBy) { %>
+                    <span class="tooltip-edited" data-toggle="tooltip" title="<%= __('Senast redigerad av:') %> <%= productData[i].editedBy %> - <%= productData[i].editedAt  %>">Redigerad</span>
+                <% } %>
+            </th>
             <th scope="col"><%= __('Produkt') %></th>
             <th scope="col"><%= __('Release') %></th>
             <th scope="col"><%= __('Typ av lösning') %></th>
@@ -20,7 +24,15 @@
     </thead>
     <tbody>
         <tr>
-            <td></td>
+            <td>
+                <% if(sessionUser.admin || sessionUser.presale) { %>
+                    <button type="button" class="btn btn-alternative" data-toggle="modal" data-target="#editModal<%= productData[i].id %>">
+                        <i class="fas fa-cogs"></i>
+                      </button>
+                <% } %>
+
+                
+            </td>
             <td><%= productData[i].product %></td>
             <td><%= productData[i].version %></td>
             <td><%= productData[i].solution %></td>
@@ -29,14 +41,6 @@
             <td><%= productData[i].rentmodel %></td>
             <td><%= productData[i].funktionsavtal %></td>
         </tr>
-        <!-- <tr>
-            <th scope="row">Kundavtal start</th>
-            <td colspan="8"><%= productData[i].agreementStart %></td>
-        </tr> -->
-        <!-- <tr>
-            <th scope="row">Kundavtal slut</th>
-            <td colspan="8"><%= productData[i].agreementEnd %></td>
-        </tr> -->
         <tr>
             <th scope="row"><%= __('Kommentar:') %></th>
             <td colspan="8">
@@ -78,6 +82,141 @@
         </div>
     </div>
 </div>
+</div>
+
+<div class="modal fade" id="editModal<%= productData[i].id %>" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel<%= productData[i].id %>"><%= __('Redigera produkt med ID') %>: <%= productData[i].id %></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form method="POST" action="/updateProduct">
+                <table class="productTable table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">id:</th>
+                            <th scope="col">Produkt</th>
+                            <th scope="col">Release</th>
+                            <th scope="col">Typ av lösning</th>
+                            <th scope="col">Antal Licenser</th>
+                            <th scope="col">Support köpt till</th>
+                            <th scope="col">Hyresmodell</th>
+                            <th scope="col">Funktionsavtal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input id="prefilledId" type="text" name="id" value="<%= productData[i].id %>" readonly></input></td>
+                            <td><input name="productInput" type="text" value="<%= productData[i].product %>" maxlength="45"></input></td>
+                            <td><input name="versionInput" type="text" id="versionInput" value="<%= productData[i].version %>" maxlength="10"></input></td>
+                            <td>
+                                <select name="solutionInput" id="solutionInput">
+                                    <option value="Ej Angiven" <% if(productData[i].solution == "Ej Angiven") { %> selected  <% } %> >Ej Angiven</option>
+                                    <option value="TelcoCloud" <% if(productData[i].solution == "TelcoCloud") { %> selected  <% } %> >TelcoCloud</option>
+                                    <option value="Cisco HCS" <% if(productData[i].solution == "Cisco HCS") { %> selected  <% } %> >Cisco HCS</option>
+                                    <option value="Cygate Cloud" <% if(productData[i].solution == "Cygate Cloud") { %> selected  <% } %> >Cygate Cloud</option>
+                                    <option value="CPE" <% if(productData[i].solution == "CPE") { %> selected  <% } %> >CPE</option>
+                                    <option value="TelcoCloud/Hybrid" <% if(productData[i].solution == "TelcoCloud/Hybrid") { %> selected  <% } %> >TelcoCloud/Hybrid</option>
+                                    <option value="Cygate CPE Hosted" <% if(productData[i].solution == "Cygate CPE Hosted") { %> selected  <% } %> >Cygate CPE Hosted</option>
+                                    <option value="CPE Hosted" <% if(productData[i].solution == "CPE Hosted") { %> selected  <% } %> >CPE Hosted</option>
+                                    <option value="CPE Main" <% if(productData[i].solution == "CPE Main") { %> selected  <% } %> >CPE Main</option>
+                                    <option value="CPE Branch" <% if(productData[i].solution == "CPE Branch") { %> selected  <% } %> >CPE Branch</option>
+                                    <option value="Remote Site" <% if(productData[i].solution == "Remote Site") { %> selected  <% } %> >Remote Site</option>
+                                </select>
+                            </td>
+                            <td><input name="licensesInput" type="text" id="licensesInput" value="<%= productData[i].licenses %>" maxlength="10"></input></td>
+                            <td><input name="supportendInput" type="date" id="supportendInput" value="<%= productData[i].supportend %>"></input></td>
+                            <td>
+                                <select name="rentmodelInput" id="rentmodelInput">
+                                    <option value="N/A"<% if(productData[i].rentmodel == "N/A"){ %> selected <% } %> >N/A</option>
+                                    <option value="Nej"<% if(productData[i].rentmodel == "Nej"){ %> selected <% } %> >Nej</option>
+                                    <option value="Trio Rent"<% if(productData[i].rentmodel == "Trio Rent"){ %> selected <% } %> >Trio Rent</option>
+                                    <option value="MLA"<% if(productData[i].rentmodel == "MLA"){ %> selected <% } %> >MLA</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select name="funktionsavtalInput" id="funktionsavtalInput">
+                                    <option value="N/A"<% if(productData[i].funktionsavtal == "N/A"){ %> selected <% } %> >N/A</option>
+                                    <option value="Nej"<% if(productData[i].funktionsavtal == "Nej"){ %> selected <% } %> >Nej</option>
+                                    <option value="Ja"<% if(productData[i].funktionsavtal == "Ja"){ %> selected <% } %> >Ja</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Kommentar</th>
+                            <td colspan="8">
+                                <textarea name="commentInput" type="text" style="width:24rem;height:6rem;" id="commentInput" value="" maxlength="500"><%= productData[i].comments %></textarea>
+                            <div class="avslutatOrDelete">
+                                <div class="avslutatDiv">
+                                    Avtalet är uppsagt/avslutat: 
+                                    <select name="avslutatInput" id="avslutatInput">
+                                        <option value="Nej"<% if(productData[i].avslutat == "Nej"){ %> selected <% } %> >Nej</option>
+                                        <option value="Ja"<% if(productData[i].avslutat == "Ja"){ %> selected <% } %> >Ja</option>
+                                    </select>
+                                </div>
+                            </div>
+                
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="accordion">
+                        <div id="collapse<%= productData[i].id %>" class="" aria-labelledby="heading<%= productData[i].id %>" data-parent="#accordion">
+                          <div class="card-body">
+                              <div id="beredskap">
+                                <div id="beredskapLeft">
+                                    <h5>SLA & Beredskap Telia</h5>
+                                    <textarea name="teliaBeredskapInput" type="text" id="teliaBeredskapInput" value="" maxlength="2048"><%= productData[i].teliaBeredskap %></textarea>
+                                    <div>
+                                        <div>
+                                            <span><%= __('Skapad av: ') %></span>
+                                            <input type="text" name="createdBy" disabled value="<%= productData[i].createdBy %>">
+                                        </div>
+                                        <div>
+                                            <span><%= __('Skapad: ') %></span>
+                                            <input type="text" name="createdAt" disabled value="<%= productData[i].createdAt %>">
+                                        </div>
+                                    </div>
+                                </div>  
+                                <div id="beredskapRight">
+                                    <h5>Leverantörsberedskap</h5>
+                                    <textarea name="levBeredskapInput" type="text" id="levBeredskapInput" value="" maxlength="2048"><%= productData[i].levBeredskap %></textarea>
+                                    <div>
+                                        <div>
+                                            <span><%= __('Senast redigerad av: ') %></span>
+                                            <input type="text" name="editedBy" disabled value="<%= productData[i].editedBy %>">
+                                        </div>
+                                        <div>
+                                            <span><%= __('Redigerad: ') %></span>
+                                            <input type="text" name="editedAt" disabled value="<%= productData[i].editedAt %>">
+                                        </div>
+                                    </div>
+
+                                </div>
+                              </div>
+                          </div>
+                        </div>
+                </div>
+          </div>
+          
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal"><%= __('Stäng') %></button>
+            <input type="hidden" name="productId" value="<%= productData[i].id %>">
+            <input type="hidden" name="company" value="<%= productData[i].orgnr %>">
+            <button type="submit" class="btn btn-success"><%= __('Uppdatera') %></button>
+          </form>
+          <form method="POST" action="/deleteProduct" class="deleteProductForm" onsubmit="return confirm('Är du säker på att du vill ta bort den här produkten?');">
+            <input type="hidden" name="productId" value="<%= productData[i].id %>">
+            <input type="hidden" name="company" value="<%= productData[i].orgnr %>">
+            <button type="submit" class="btn btn-danger"><%= __('Ta bort') %></button>  
+          </form>
+        </div>
+      </div>
+    </div>
 </div>
 
 

@@ -35,27 +35,23 @@
             <p><b>Ansvarig säljare:</b> <input name="teliaansvarigInput" type="text" id="teliaansvarigInput" value="<%= companyData.teliaansvarig %>" maxlength="60"></input></p> 
             <p><b>Service Manager:</b> <input name="smInput" type="text" id="smInput" value="<%= companyData.servicemanager %>" maxlength="60"></input></p>
             <p><b>Presale:</b> <input name="presaleInput" type="text" id="presaleInput" value="<%= companyData.presale %>"></p>
-            <p><b>Kundavtal start:</b> <input name="agreementStartInput" type="date" id="agreementStartInput" value="<%= companyData.agreementStart %>"></p>
-            <p><b>Kundavtal slut:</b> <input name="agreementEndInput" type="date" id="agreementEndInput" value="<%= companyData.agreementEnd %>"></p>
+            <p><b>Kundavtal start:</b> <input name="agreementStartInput" type="date" id="agreementStartInput" value="<%= companyData.agreementStart %>" disabled></p>
+            <p><b>Kundavtal slut:</b> <input name="agreementEndInput" type="date" id="agreementEndInput" value="<%= companyData.agreementEnd %>" disabled></p>
             <p><b>Automatisk förlängning av avtal:</b>
-            <select name="autoProlongInput" id="autoProlongInput">
+            <select name="autoProlongInput" id="autoProlongInput" disabled>
                 <option value="Nej"<% if(companyData.autoProlong == "Nej"){ %> selected <% } %> >Nej</option>
                 <option value="Ja"<% if(companyData.autoProlong == "Ja"){ %> selected <% } %> >Ja</option>
             </select>
-            <p><b>Länk till dokumentation i Sharepoint: </b><input name="documentationInput" type="text" id="documentationInput" value="<%= companyData.documentation %>" maxlength="500"></input></p>
+            <p><b>Länk till dokumentation i Sharepoint: </b><input name="documentationInput" type="text" id="documentationInput" value="<%= companyData.documentation %>" maxlength="500" disabled></input></p>
             </p>
         </div>
         <div class="customerRight">
             <p><b>Specialistsäljare UC: </b> <input name="ucansvarigInput" type="text" id="ucansvarigInput" value="<%= companyData.ucansvarig %>" maxlength="60"></input></p> 
             <p><b>LCM: </b> <input name="lcmInput" type="text" id="lcmInput" value="<%= companyData.lcm %>" maxlength="60"></input></p>
             <p><b>CMS: </b> <input name="cmsInput" type="text" id="cmsInput" value="<%= companyData.cms %>" maxlength="60"></input></p>
-            <p><b>Vismakundnummer: </b> <input name="vismaInput" type="text" id="vismaInput" value="<%= companyData.visma %>" maxlength="10"></input></p>
+            <p><b>Vismakundnummer: </b> <input name="vismaInput" type="text" id="vismaInput" value="<%= companyData.visma %>" maxlength="10" disabled></input></p>
         </div>
 
-    </div>
-    <div class="companyComments">
-        <b>Kommentar: </b>
-        <textarea name="companyCommentsInput" type="text" style="width:24rem;height:6rem;"id="companyCommentsInput" value="" maxlength="900"><%= companyData.comments %></textarea>
     </div>
     <b>Senast Uppdaterad: </b><i class="text-muted"><%= companyData.lastUpdatedDate + ' av ' + companyData.lastUpdatedUser %> %></i>
 </div>

@@ -5,17 +5,20 @@
 
     <% if(sessionUser.admin) { %>
         <%- include('editCustomerPart'); -%>
+    <% } else if(sessionUser.presale) { %>
+        <%- include('editCustomerPresale'); -%>
     <% } else { %>
         <%- include('customer'); -%>
     <% } %>
-
-    <%- include('editHcs') -%>
-
-    <% if(sessionUser.admin) { %>
-        <%- include('editProductPart'); -%>
+    <% if(sessionUser.hcsAdmin || sessionUser.admin) { %>
+        <%- include('editHcs') -%>
     <% } else { %>
-        <%- include('product'); -%>
-    <% } %>
+        <%- include('hcs') -%>
+    <% } %>   
+    
+
+    <%- include('product'); -%>
+
 
     
     <%- include('footer'); -%>

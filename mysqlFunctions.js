@@ -63,19 +63,19 @@ const report = async (data) => {
     } else {
         switch (data.supportendFilter){
             case 'lessThan':
-                supportend = `AND supportend < ${data.supportend}`
+                supportend = `AND supportend < '${data.supportend}'`
                 break;
             case 'lessThanEqual':
-                supportend = `AND supportend <= ${data.supportend}`
+                supportend = `AND supportend <= '${data.supportend}'`
                 break;
             case 'equal':
                 supportend = `AND supportend = '${data.supportend}'`
                 break;
             case 'greaterThanEqual':
-                supportend = `AND supportend >= ${data.supportend}`
+                supportend = `AND supportend >= '${data.supportend}'`
                 break;
             case 'greaterThan':
-                supportend = `AND supportend > ${data.supportend}`
+                supportend = `AND supportend > '${data.supportend}'`
                 break;
         }
     }
@@ -175,6 +175,10 @@ const report = async (data) => {
             if(data.solution.includes('CPE')){solutionArray.push('CPE')}
             if(data.solution.includes('TelcoCloud/Hybrid')){solutionArray.push('TelcoCloud/Hybrid')}
             if(data.solution.includes('Cygate CPE Hosted')){solutionArray.push('Cygate CPE Hosted')}
+            if(data.solution.includes('CPE Hosted')){solutionArray.push('CPE Hosted')}
+            if(data.solution.includes('CPE Main')){solutionArray.push('CPE Main')}
+            if(data.solution.includes('CPE Branch')){solutionArray.push('CPE Branch')}
+            if(data.solution.includes('Remote Site')){solutionArray.push('Remote Site')}
             if(solutionArray.length == 1){
                 solutionArray = `AND solution = ${solutionArray[0]}`
             } else {

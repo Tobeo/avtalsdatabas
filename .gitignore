@@ -1,0 +1,13 @@
+mysql.js
+config.js
+node_modules/
+*.log
+*.log*
+*.csr
+*.key
+*.crt
+*.pem
+*id_rsa*
+public/styles/*.scss
+public/styles/.sass-cache
+logs/

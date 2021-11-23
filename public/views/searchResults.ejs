@@ -1,4 +1,4 @@
-<% if(data.length <= 0) { %>
+<% if(data.length <= 0 && productsData.length <= 0 && groupData.length <= 0) { %>
     <h4>Inga resultat hittades på <%= locals.searchedString %>!</h4>
 <% } %>
 
@@ -34,13 +34,19 @@
                 <div></div>
             <% }} %>
             <% if(!data[i].sns) { %>
-                <td><%= data[i].kundnamn %></td>
+                <td>
+                    <%= data[i].kundnamn %>
+                    <% if(data[i].partOfGroup != 0) { %>
+                        <% let group = groups.find(group => group.id == data[i].partOfGroup) %>
+                        <span class="groupName"><%= group.groupname %></span>
+                    <% } %>
+                </td>
                 <td><%= data[i].orgnr.substring(0,6)+"-"+data[i].orgnr.substring(6, 10) %></td>
                 <td>
                 <form method="GET" action="/customer/<%= data[i].orgnr %>" id="selectSearchResult">
                     <button type="submit" class="btn btn-sm btn-success float-left" label="Välj"><i class="far fa-eye"></i></button>
                 </form>
-                    <% if(sessionUser.admin) { %>
+                    <% if(sessionUser.admin || sessionUser.presale) { %>
                         <form method="POST" action="/editCustomer">
                             <button type="submit" class="btn btn-sm btn-warning float-left" style="margin-left:5px;" name="company" value="<%= data[i].orgnr %>" label="Redigera"><i class="far fa-edit"></i></button>
                         </form>
@@ -55,11 +61,11 @@
 </table>
 <% } %>
 
-<br><br>
-<% if(commentsData.length <= 0) { %>
+<% if(groupData.length <= 0) { %>
     <p></p>
 <% } else { %>
-    <h5><%= __('Kunder som innehåller') %> <i><%= locals.searchedString %></i></h5>
+    <br><br>
+    <h5><%= __('Kunder som tillhör grupp') %> <i><%= locals.searchedString %></i></h5>
     <table class="col-md-12 table">
         <thead>
             <tr>
@@ -70,16 +76,63 @@
         </thead>
         <tbody>
             <tr>
-            <% for(let i=0;i<commentsData.length;i++) { %>
-                <td><%= commentsData[i].kundnamn %></td>
-                <td><%= commentsData[i].orgnr.substring(0,6)+"-"+commentsData[i].orgnr.substring(6, 10) %></td>
+            <% for(let i=0;i<groupData.length;i++) { %>
                 <td>
-                <form method="GET" action="/customer/<%= commentsData[i].orgnr %>" id="selectSearchResult">
+                    <%= groupData[i].kundnamn %>
+                    <% if(groupData[i].partOfGroup != 0) { %>
+                        <% let group = groups.find(group => group.id == groupData[i].partOfGroup) %>
+                        <span class="groupName"><%= group.groupname %></span>
+                    <% } %>
+                </td>
+                <td><%= groupData[i].orgnr.substring(0,6)+"-"+groupData[i].orgnr.substring(6, 10) %></td>
+                <td>
+                <form method="GET" action="/customer/<%= groupData[i].orgnr %>" id="selectSearchResult">
                     <button type="submit" class="btn btn-sm btn-success float-left" label="Välj"><i class="far fa-eye"></i></button>
                 </form>
-                    <% if(sessionUser.admin) { %>
+                    <% if(sessionUser.admin || sessionUser.presale) { %>
                         <form method="POST" action="/editCustomer">
-                            <button type="submit" class="btn btn-sm btn-warning float-left" style="margin-left:5px;" name="company" value="<%= commentsData[i].orgnr %>" label="Redigera"><i class="far fa-edit"></i></button>
+                            <button type="submit" class="btn btn-sm btn-warning float-left" style="margin-left:5px;" name="company" value="<%= groupData[i].orgnr %>" label="Redigera"><i class="far fa-edit"></i></button>
+                        </form>
+                    <% } %>
+                </td>
+    
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+<% } %>
+
+<% if(productsData.length <= 0) { %>
+    <p></p>
+<% } else { %>
+    <br><br>
+    <h5><%= __('Kunder som innehållerProduct') %> <i><%= locals.searchedString %></i></h5>
+    <table class="col-md-12 table">
+        <thead>
+            <tr>
+                <th><%= __('Kundnamn') %></th>
+                <th><%= __('Organisationsnummer') %></th>
+                <th><%= __('Välj') %></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            <% for(let i=0;i<productsData.length;i++) { %>
+                <td>
+                    <%= productsData[i].kundnamn %>
+                    <% if(productsData[i].partOfGroup != 0) { %>
+                        <% let group = groups.find(group => group.id == productsData[i].partOfGroup) %>
+                        <span class="groupName"><%= group.groupname %></span>
+                    <% } %>
+                </td>
+                <td><%= productsData[i].orgnr.substring(0,6)+"-"+productsData[i].orgnr.substring(6, 10) %></td>
+                <td>
+                <form method="GET" action="/customer/<%= productsData[i].orgnr %>" id="selectSearchResult">
+                    <button type="submit" class="btn btn-sm btn-success float-left" label="Välj"><i class="far fa-eye"></i></button>
+                </form>
+                    <% if(sessionUser.admin || sessionUser.presale) { %>
+                        <form method="POST" action="/editCustomer">
+                            <button type="submit" class="btn btn-sm btn-warning float-left" style="margin-left:5px;" name="company" value="<%= productsData[i].orgnr %>" label="Redigera"><i class="far fa-edit"></i></button>
                         </form>
                     <% } %>
                 </td>

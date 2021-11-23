@@ -1,0 +1,36 @@
+<h4>Redigera kundgrupper</h4>
+
+<form method="POST" action="/modifyGroup" onsubmit="return confirm('Är du säker på att du vill spara ändringarna för den här gruppen?');">
+    <div class="input-group mb-3">
+        <label class="input-group-text" for="groupSelect">Välj grupp att redigera</label>
+        <select class="form-control" id="groupSelect" name="selectedGroup">
+            <% if(loadedGroups) { %>
+                <% for(let i=0; i<loadedGroups.length; i++){ %>
+                    <% if(loadedGroups[i].deleted == 0) { %>
+                        <option value="<%= loadedGroups[i].id %>">
+                            <%= loadedGroups[i].groupname %>
+                        </option>
+                    <% } %>
+                    <% }} else { %>
+                        <option value="">Misslyckades att ladda grupper.</option>
+                        <% } %>
+        </select>
+        <button class="btn btn-outline-danger" type="submit" name="action" value="Delete">Ta bort grupp</button>
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Byt namn på grupp</span>
+        <input name="gruppnamn" type="text" class="form-control" placeholder="Nytt Gruppnamn"
+            aria-label="Nytt Gruppnamn" minlength="1">
+        <button class="btn btn-outline-warning" type="submit" name="action" value="Update">Spara gruppnamn</button>
+    </div>
+</form>
+
+
+<form method="POST" action="/addGroup">
+    <div class="input-group mb-3">
+        <span class="input-group-text">Lägg till ny kundgrupp</span>
+        <input name="gruppnamn" type="text" class="form-control" placeholder="Gruppnamn" aria-label="Gruppnamn"
+            minlength="1">
+        <button class="btn btn-outline-success" type="submit">Skapa</button>
+    </div>
+</form>

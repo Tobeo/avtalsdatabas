@@ -366,3 +366,93 @@
     width:30px;
     height:30px;
 }
+
+.group-solution {
+    color:green;
+}
+
+.group-warning {
+    color:red;
+}
+
+.groupName {
+    color:red;
+    padding:2px;
+    border:1px dashed red;
+}
+
+
+
+.commentBox {
+    border-radius:12px;
+    background-color:#d4d4d4;
+    .commentDate {
+        font-size:.8rem;
+        padding-left:1rem;
+    }
+    .commentContent {
+        white-space: pre-wrap;
+        padding-left:1rem;
+    }
+    .importantComment {
+        color:red;
+    }
+}
+
+
+.addComment {
+    display:flex;
+    flex-direction:column;
+    .importantBox {
+        align-self:flex-end;
+        input {
+            margin-left:.5rem;
+        }
+    }
+    .commentButton {
+        border-radius:2rem;
+        padding: .25rem;
+        margin-top:.5rem;
+        align-self:flex-end;
+        width:10%;
+    }
+    .commentInput {
+        resize:none;
+        width:100%;
+        height:6rem;
+        padding:1rem;
+    }
+}
+
+.commentActionButtons {
+    float:right;
+    display:flex;
+    flex-direction:row;
+    button {
+        width:auto;
+        margin-top:.1rem;
+        margin-right:.5rem;
+        margin-left:.25rem;
+        align-items:center;
+        height:.5rem;
+        line-height:0;
+        font-size:.5rem;
+    }
+}
+
+.modal-comment {
+    width:100%;
+    white-space:pre-wrap;
+    height:16em;
+    resize:none;
+}
+
+.tooltip-edited {
+    font-size:.8rem;
+    color:grey;
+    border-bottom:1px dashed grey;
+}
+
+.deleteProductForm {
+    float:left;
+}

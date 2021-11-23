@@ -14,7 +14,9 @@
     <h1 id="title">UC Tailor Made Avtalsdatabas</h1>
     <p><%= __('Inloggad som:') %> <%= sessionUser.name %> 
     <% if(sessionUser.admin){ %>
-        (Admin)    
+        (Admin)
+    <% } else if(sessionUser.presale){ %>
+        (Presale)    
     <% } else if (sessionUser.hcsAdmin) { %>
         (HCS-Admin)
     <% } else { %>
@@ -23,8 +25,15 @@
     <i class="logout">(<a href="/logout"><%= __('Logga ut') %></a>)</i>
     </p>
     <a href="/landing"><button type="button" class="btn btn-primary btn-sm"><%= __('Sök') %></button></a>
-    <a href="/new"><button type="button" class="btn btn-primary btn-sm" <% if(!sessionUser.admin){ %> disabled <% } %> > <%= __('Ny Kund') %></button></a>
-    <a href="/reports"><button type="button" class="btn btn-primary btn-sm" <% if(!sessionUser.admin){ %> disabled <% } %> > <%= __('Exportera') %></button></a>
+    <% if(sessionUser.admin){ %>
+        <a href="/new"><button type="button" class="btn btn-primary btn-sm"> <%= __('Ny Kund') %></button></a>
+    <% } %>
+    <% if(sessionUser.admin || sessionUser.presale) { %>
+        <a href="/reports"><button type="button" class="btn btn-primary btn-sm"> <%= __('Exportera') %></button></a>
+    <% } %>
+    <% if(sessionUser.admin || sessionUser.presale) { %>
+        <a href="/controlpanel"><button type="button" class="btn btn-primary btn-sm"> <%= __('Kontrollpanel') %></button></a>
+    <% } %>
 
     <% if(locals.locale === 'en'){ %>    
     <a href="/locale/se"><img src="/img/se.png" id="flagIcon"></a>            

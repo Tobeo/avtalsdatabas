@@ -1,0 +1,270 @@
+<% var importantComments = [] %>
+<% var otherComments = [] %>
+<% for(let i=0; i < companyComments.length; i++) { %>
+    <% if(!companyComments[i].deleted) { %>
+        <% if(companyComments[i].important) { %>
+            <% importantComments.push(companyComments[i]) %>
+        <% } else { %>
+            <% otherComments.push(companyComments[i]) %>
+    <% }}} %>
+
+
+<% if(importantComments.length > 0) { %>
+<% if(importantComments.length > 1) { %>
+<% importantComments.sort((a,b) => {return b.editedAt.localeCompare(a.editedAt);}) %>
+<% } %>
+<% for(let i=0; i < importantComments.length; i++) { %>
+        <div class="commentBox">
+            <strong class="commentDate">
+                <%= importantComments[i].createdAt %> 
+                - 
+                <%= importantComments[i].createdBy %> 
+                <% if(importantComments[i].important) { %>
+                    <span class="importantComment">!!</span>
+                <% } %>
+            </strong>
+            <% if(importantComments[i].createdAt != importantComments[i].editedAt) { %>
+                <span class="tooltip-edited" data-toggle="tooltip" title="<%= __('Redigerad av:') %> <%= importantComments[i].editedBy %> - <%= importantComments[i].editedAt %>">Redigerad</span>
+                <!-- <em class="commentDate"><%= __('Redigerad av:') %> <%= importantComments[i].editedBy %> - <%= importantComments[i].editedAt %></em> -->
+                <% } %>
+            <% if(sessionUser.presale || sessionUser.admin) { %>
+                <div class="commentActionButtons">
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editModal<%= importantComments[i].id %>">
+                        Redigera
+                        </button>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal<%= importantComments[i].id %>">
+                        Ta bort
+                        </button>
+                </div>
+                <% } %>
+                
+                <p class="commentContent"><%= importantComments[i].comment %></p>
+        </div>
+<% }} %>
+
+<% if(otherComments.length > 0) { %>
+<% otherComments.sort((a,b) => {return b.editedAt.localeCompare(a.editedAt);}) %>
+<% for(let i=0; i < otherComments.length; i++) { %>
+        <div class="commentBox">
+            <strong class="commentDate">
+                <%= otherComments[i].createdAt %> 
+                - 
+                <%= otherComments[i].createdBy %> 
+                <% if(otherComments[i].important) { %>
+                    <span class="importantComment">!!</span>
+                <% } %>
+            </strong>
+            <% if(otherComments[i].createdAt != otherComments[i].editedAt) { %>
+            <span class="tooltip-edited" data-toggle="tooltip" title="<%= __('Redigerad av:') %> <%= otherComments[i].editedBy %> - <%= otherComments[i].editedAt %>">Redigerad</span>
+            <!-- <em class="commentDate"><%= __('Redigerad av:') %> <%= otherComments[i].editedBy %> - <%= otherComments[i].editedAt %></em> -->
+            <% } %>
+            <% if(sessionUser.presale || sessionUser.admin) { %>
+                <div class="commentActionButtons">
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editModal<%= otherComments[i].id %>">
+                        Redigera
+                      </button>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal<%= otherComments[i].id %>">
+                        Ta bort
+                      </button>
+                </div>
+                <% } %>
+            
+            <p class="commentContent"><%= otherComments[i].comment %></p>
+
+        </div>
+<% }} %>
+
+
+<% if(importantComments.length > 0) { %>
+<% importantComments.forEach(function(comment) { %>
+    <div class="modal fade" id="editModal<%= comment.id %>" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editModalLabel<%= comment.id %>"><%= __('Redigera kommentar med ID') %>: <%= comment.id %></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="/updateComment">
+                <b><%= __('Kommentar:') %></b>
+                <textarea value="" class="modal-comment" name="comment"><%= comment.comment%></textarea>
+                <div>
+                    <em>Skapad:</em>
+                    <input type="text" name="createdAt" disabled value="<%= comment.createdAt %>">
+                </div>
+                <div>
+                    <em>Skapad av:</em>
+                    <input type="text" name="createdBy" disabled value="<%= comment.createdBy %>">
+                </div>
+                <div>
+                    <em>Senast ändrad:</em>
+                    <input type="text" name="editedAt" disabled value="<%= comment.editedAt %>">
+                </div>
+                <div>
+                    <em>Senast ändrad av:</em>
+                    <input type="text" name="editedBy" disabled value="<%= comment.editedBy %>">
+                </div>
+                <div>
+                    <em>Markera som viktig:</em>
+                    <input type="checkbox" name="important" checked value="on">
+                </div>
+              </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal"><%= __('Stäng') %></button>
+                <input type="hidden" name="commentId" value="<%= comment.id %>">
+                <input type="hidden" name="company" value="<%= comment.orgnr %>">
+                <button type="submit" class="btn btn-success"><%= __('Uppdatera') %></button>
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="deleteModal<%= comment.id %>" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel<%= comment.id %>"><%= __('Ta bort kommentar med ID') %>: <%= comment.id %></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <b>Är du säker på att du vill ta bort den här kommentaren?</b>
+                <textarea disabled value="" class="modal-comment"><%= comment.comment%></textarea>
+                <div>
+                    <em>Skapad:</em>
+                    <input type="text" disabled value="<%= comment.createdAt %>">
+                </div>
+                <div>
+                    <em>Skapad av:</em>
+                    <input type="text" disabled value="<%= comment.createdBy %>">
+                </div>
+                <div>
+                    <em>Senast ändrad:</em>
+                    <input type="text" disabled value="<%= comment.editedAt %>">
+                </div>
+                <div>
+                    <em>Senast ändrad av:</em>
+                    <input type="text" disabled value="<%= comment.editedBy %>">
+                </div>
+                <div>
+                    <em>Viktig:</em>
+                    <input type="checkbox" name="important" id="" value="<%= comment.important %>" disabled>
+                </div>
+              </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal"><%= __('Stäng') %></button>
+              <form method="POST" action="/deleteComment">
+                <input type="hidden" name="commentId" value="<%= comment.id %>">
+                <input type="hidden" name="company" value="<%= comment.orgnr %>">
+                <button type="submit" class="btn btn-danger"><%= __('Ta bort') %></button>
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+<% }) %>
+<% } %>
+
+
+<% if(otherComments.length > 0) { %>
+<% otherComments.forEach(function(comment){ %>
+<div class="modal fade" id="editModal<%= comment.id %>" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel<%= comment.id %>"><%= __('Redigera kommentar med ID') %>: <%= comment.id %></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form method="POST" action="/updateComment">
+            <b><%= __('Kommentar:') %></b>
+            <textarea value="" class="modal-comment" name="comment"><%= comment.comment%></textarea>
+            <div>
+                <em>Skapad:</em>
+                <input type="text" name="createdAt" disabled value="<%= comment.createdAt %>">
+            </div>
+            <div>
+                <em>Skapad av:</em>
+                <input type="text" name="createdBy" disabled value="<%= comment.createdBy %>">
+            </div>
+            <div>
+                <em>Senast ändrad:</em>
+                <input type="text" name="editedAt" disabled value="<%= comment.editedAt %>">
+            </div>
+            <div>
+                <em>Senast ändrad av:</em>
+                <input type="text" name="editedBy" disabled value="<%= comment.editedBy %>">
+            </div>
+            <div>
+                <em>Markera som viktig:</em>
+                <input type="checkbox" name="important" id="" value="<%= comment.important %>">
+            </div>
+          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal"><%= __('Stäng') %></button>
+            <input type="hidden" name="commentId" value="<%= comment.id %>">
+            <input type="hidden" name="company" value="<%= comment.orgnr %>">
+            <button type="submit" class="btn btn-success"><%= __('Uppdatera') %></button>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal<%= comment.id %>" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel<%= comment.id %>"><%= __('Ta bort kommentar med ID') %>: <%= comment.id %></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <b>Är du säker på att du vill ta bort den här kommentaren?</b>
+            <textarea disabled value="" class="modal-comment"><%= comment.comment%></textarea>
+            <div>
+                <em>Skapad:</em>
+                <input type="text" disabled value="<%= comment.createdAt %>">
+            </div>
+            <div>
+                <em>Skapad av:</em>
+                <input type="text" disabled value="<%= comment.createdBy %>">
+            </div>
+            <div>
+                <em>Senast ändrad:</em>
+                <input type="text" disabled value="<%= comment.editedAt %>">
+            </div>
+            <div>
+                <em>Senast ändrad av:</em>
+                <input type="text" disabled value="<%= comment.editedBy %>">
+            </div>
+            <div>
+                <em>Viktig:</em>
+                <input type="checkbox" name="important" id="" value="<%= comment.important %>" disabled>
+            </div>
+          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal"><%= __('Stäng') %></button>
+          <form method="POST" action="/deleteComment">
+            <input type="hidden" name="commentId" value="<%= comment.id %>">
+            <input type="hidden" name="company" value="<%= comment.orgnr %>">
+            <button type="submit" class="btn btn-danger"><%= __('Ta bort') %></button>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+<% }) %>
+<% } %>
+<%# Edit Modal %> 
+
+
+<%# Delete Modal %>
+

@@ -1,6 +1,17 @@
+<% if(sessionUser.presale && !sessionUser.admin) { %>
+    <div style="display:flex;flex-direction:row;">
+        <form method="GET" action="/customer/<%= companyData.orgnr %>">
+            <button type="submit" class="btn btn-danger buttonMarginRight" name="company" value="<%= companyData.orgnr %>" action="POST" label="Avbryt">Avbryt <i class="fas fa-times-circle"></i></button>  
+        </form>
+    <form method="POST" action="/saveCustomer">
+        <button type="submit" class="saveEditButton btn btn-success buttonMarginRight" name="company" value="<%= companyData.orgnr %>" action="POST" label="Spara">Spara <i class="fas fa-save"></i></button>
+    </div>  
+    <% } %>
 <% if(productData.length >= 1) { %>
 <% for(i=0; i < productData.length; i++) { %>
 <% if(productData[i].deleted != 'Yes') { %>
+
+
 
 <div class="productBorder">
 <table class="productTable table table-hover table-bordered">
@@ -30,6 +41,10 @@
                     <option value="CPE" <% if(productData[i].solution == "CPE") { %> selected  <% } %> >CPE</option>
                     <option value="TelcoCloud/Hybrid" <% if(productData[i].solution == "TelcoCloud/Hybrid") { %> selected  <% } %> >TelcoCloud/Hybrid</option>
                     <option value="Cygate CPE Hosted" <% if(productData[i].solution == "Cygate CPE Hosted") { %> selected  <% } %> >Cygate CPE Hosted</option>
+                    <option value="CPE Hosted" <% if(productData[i].solution == "CPE Hosted") { %> selected  <% } %> >Cygate CPE Hosted</option>
+                    <option value="CPE Main" <% if(productData[i].solution == "CPE Main") { %> selected  <% } %> >CPE Main</option>
+                    <option value="CPE Branch" <% if(productData[i].solution == "CPE Branch") { %> selected  <% } %> >CPE Branch</option>
+                    <option value="Remote Site" <% if(productData[i].solution == "Remote Site") { %> selected  <% } %> >Remote Site</option>
                 </select>
             </td>
             <td><input name="licensesInput" type="text" id="licensesInput" value="<%= productData[i].licenses %>" maxlength="10"></input></td>

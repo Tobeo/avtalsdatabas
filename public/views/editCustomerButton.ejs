@@ -34,6 +34,14 @@
             <button type="submit" value="<%= companyData.orgnr %>" class="btn btn btn-primary buttonMarginRight" label="Spara"><%= __('Skapa HCS data') %> <i class="fas fa-plus-circle"></i></button>  
         </form>
         <% } %> 
+        <% if(sessionUser.presale && !sessionUser.admin) { %>
+        <form method="POST" action="/editCustomer">
+            <button type="submit" class="btn btn btn-warning buttonMarginRight" name="company" value="<%= companyData.orgnr %>" action="POST" label="Spara"><%= __('Redigera') %> <i class="fas fa-edit"></i></button>  
+        </form>
+        <form method="POST" action="/addProduct">
+            <button type="submit" class="btn btn btn-primary buttonMarginRight" name="company" value="<%= companyData.orgnr %>" action="POST" label="Spara"><%= __('Lägg till produkt') %> <i class="fas fa-plus-circle"></i></button>  
+        </form>
+        <% } %>
         <% if(sessionUser.admin){ %>
         <form method="POST" action="/editCustomer">
             <button type="submit" class="btn btn btn-warning buttonMarginRight" name="company" value="<%= companyData.orgnr %>" action="POST" label="Spara"><%= __('Redigera') %> <i class="fas fa-edit"></i></button>  

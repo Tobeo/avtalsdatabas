@@ -49,7 +49,7 @@ const generateWorkBook = async (res, data) => {
       id: data.id,
       Kommentar: data.comments,
       TeliaBeredskap: data.teliaBeredskap,
-      LeverantörBeredskap: data.levBeredskap
+      LeverantörBeredskap: data.levBeredskap    
     }
   
     worksheet.addRow(Object.keys(sortedData))

@@ -1,0 +1,12 @@
+<form method="POST" action="/addComment">
+    <div class="addComment">
+        <input type="hidden" name="company" value="<%= companyData.orgnr %>">
+        <textarea name="commentInput" type="text" class="commentInput" id="commentInput" value="" maxlength="900"></textarea>
+        <div class="importantBox">
+            <span>Markera som viktig?</span><input type="checkbox" name="important">
+        </div>
+        
+        <button class="commentButton" type="submit">Skriv notering</button>
+    </div>
+
+</form>
